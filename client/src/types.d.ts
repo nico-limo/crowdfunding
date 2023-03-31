@@ -24,3 +24,12 @@ export interface IconInterface {
   disabled?: boolean
   animated?: boolean
 }
+
+export type ThemeType = {
+  colors: {
+    bg: string
+    text: string
+  }
+  darkmode: boolean
+  iconURL: string
+}

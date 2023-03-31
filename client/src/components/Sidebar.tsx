@@ -1,24 +1,22 @@
-import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logo, sun, moon } from '../assets'
 import { navlinks } from '../constants'
 import Icon from './Icon'
+import { useActiveLink } from '../hooks'
+import useTheme from '../hooks/useTheme'
 
 const Sidebar = () => {
   const navigate = useNavigate()
-  const [activeLink, setActiveLink] = useState<string>('dashboard')
-  const [colorModeActive, setColorModeActive] = useState(sun)
+  const { activeLink, updateActiveLink } = useActiveLink()
+  const { toggleTheme, iconURL } = useTheme()
 
   const onNavigate = (link: string, name: string, disabled: boolean = true) => {
     if (!disabled) {
-      setActiveLink(name)
+      updateActiveLink(name)
       navigate(link)
     }
   }
 
-  const colorMode = () => {
-    setColorModeActive((prevMode) => (prevMode === sun ? moon : sun))
-  }
   return (
     <div className='flex justify-between items-center flex-col sticky top-5 h-[93vh] '>
       <Link to='/'>
@@ -47,12 +45,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <Icon
-          bg='black-700'
-          imgUrl={colorModeActive}
-          onClick={colorMode}
-          animated
-        />
+        <Icon bg='black-700' imgUrl={iconURL} onClick={toggleTheme} animated />
       </div>
     </div>
   )
