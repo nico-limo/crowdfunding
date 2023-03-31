@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CustomButton from './CustomButton'
-import { logo, menu, search, thirdweb } from '../assets'
-import { navlinks } from '../constants'
+import { menu, search } from '../assets'
 import UserIcon from './UserIcon'
 import Drawer from './Drawer'
+import { useActiveLink } from '../hooks'
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const [activeLink, setActiveLink] = useState<string>('dashboard')
-
+  const { activeLink, updateActiveLink } = useActiveLink()
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false)
   const address = '0xasdasdasfsdhjkl'
 
   const onNavigate = (link: string, name: string, disabled: boolean = true) => {
     if (!disabled) {
-      setActiveLink(name)
+      updateActiveLink(name)
       setToggleDrawer(false)
       navigate(link)
     }

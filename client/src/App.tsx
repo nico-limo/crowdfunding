@@ -1,10 +1,14 @@
 import { Route, Routes } from 'react-router-dom'
 import { Navbar, Sidebar } from './components'
 import { Home, Campaign, CreateCampaign, Profile } from './pages'
+import useTheme from './hooks/useTheme'
 
 export default function App() {
+  const { colors } = useTheme()
   return (
-    <div className='relative sm:p-8 p-4 bg-[#13131a] min-h-screen flex flex-row'>
+    <div
+      className={`relative sm:p-8 p-4 bg-[${colors.bg}] min-h-screen flex flex-row`}
+    >
       <div className='sm:flex hidden mr-10'>
         <Sidebar />
       </div>
