@@ -28,7 +28,7 @@ contract CrowdFunding {
     ) public returns (uint256) {
         Campaign storage campaign = campaigns[numberOfCampaigns];
         require(
-            _deadline < block.timestamp,
+            _deadline > block.timestamp,
             "The deadline should be a date in the future"
         );
 
@@ -46,9 +46,17 @@ contract CrowdFunding {
     }
 
     function donateToCampaign(uint256 _id) public payable {
-        uint256 amount = msg.value;
-
         Campaign storage campaign = campaigns[_id];
+        require(
+            campaign.deadline > block.timestamp,
+            "The campaign deadline has already passed"
+        );
+
+        uint256 amount = msg.value;
+        require(
+            campaign.amountCollected + amount <= campaign.target,
+            "The campaign has already reached its funding target"
+        );
         campaign.donators.push(msg.sender);
         campaign.donations.push(amount);
 
