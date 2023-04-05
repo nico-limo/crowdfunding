@@ -6,9 +6,7 @@ import { RootState } from '../redux/store'
 const useTheme = () => {
   const dispatch = useDispatch()
 
-  const { colors, darkmode, iconURL } = useSelector(
-    (state: RootState) => state.theme
-  )
+  const { darkmode, iconURL } = useSelector((state: RootState) => state.theme)
 
   const toggleTheme = () => {
     if (darkmode) {
@@ -17,7 +15,7 @@ const useTheme = () => {
       dispatch(setDarkTheme())
     }
   }
-  return { darkmode, toggleTheme, iconURL, colors }
+  return { darkmode, toggleTheme, iconURL }
 }
 
 export default useTheme

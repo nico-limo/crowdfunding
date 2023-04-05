@@ -5,7 +5,7 @@ export type NavLinksType = {
   disabled: boolean
 }
 export type CustomButtonType = {
-  onClick: () => void
+  onClick?: () => void
   title: string
   bg?: string
   btnType?: button | reset | submit
@@ -15,6 +15,21 @@ export type UserIconType = {
   isFull?: boolean
 }
 
+export type ThemeType = {
+  darkmode: boolean
+  iconURL: string
+}
+
+export type FormFieldType = {
+  label: string
+  placeholder: string
+  inputType?: 'text' | 'date' | 'url'
+  value: string
+  handleChange: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void
+  isTextArea?: boolean
+}
 export interface IconInterface {
   size?: string
   imgUrl: string
@@ -25,11 +40,11 @@ export interface IconInterface {
   animated?: boolean
 }
 
-export type ThemeType = {
-  colors: {
-    bg: string
-    text: string
-  }
-  darkmode: boolean
-  iconURL: string
+export interface CampainInterface {
+  name: string
+  title: string
+  description: string
+  target: string
+  deadline: string
+  image: string
 }

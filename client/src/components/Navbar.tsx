@@ -33,7 +33,7 @@ const Navbar = () => {
         <input
           type='text'
           placeholder='Search for campaigns'
-          className='flex w-full font-epilogue font-normal text-[14px] placeholder:text-gray-600 text-white bg-transparent outline-none'
+          className='flex w-full font-epilogue font-normal text-[14px] placeholder:text-gray-600 bg-transparent outline-none'
         />
         <div className='w-[72px] h-full  rounded-[20px] bg-green-600 flex justify-center items-center cursor-pointer'>
           <img

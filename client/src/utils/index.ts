@@ -1,3 +1,5 @@
+import { CampainInterface } from '../types'
+
 export const daysLeft = (deadline: string): string => {
   const difference = new Date(deadline).getTime() - Date.now()
   const remainingDays = difference / (1000 * 3600 * 24)
@@ -24,4 +26,13 @@ export const checkIfImage = (
   if (img.complete) callback(true)
   img.onload = () => callback(true)
   img.onerror = () => callback(false)
+}
+
+export const INITIAL_FORM: CampainInterface = {
+  name: '',
+  title: '',
+  description: '',
+  target: '',
+  deadline: '',
+  image: ''
 }

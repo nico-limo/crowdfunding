@@ -4,10 +4,12 @@ import { Home, Campaign, CreateCampaign, Profile } from './pages'
 import useTheme from './hooks/useTheme'
 
 export default function App() {
-  const { colors } = useTheme()
+  const { darkmode } = useTheme()
+  const colorBg = darkmode ? 'bg-black-800' : 'bg-cyan-100'
+  const colorText = darkmode ? 'text-white' : 'text-black'
   return (
     <div
-      className={`relative sm:p-8 p-4 bg-[${colors.bg}] min-h-screen flex flex-row`}
+      className={`relative sm:p-8 p-4 ${colorBg} ${colorText}   min-h-screen flex flex-row`}
     >
       <div className='sm:flex hidden mr-10'>
         <Sidebar />
@@ -17,7 +19,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/campaign' element={<Campaign />} />
+          <Route path='/campaign/:id' element={<Campaign />} />
           <Route path='/create' element={<CreateCampaign />} />
         </Routes>
       </div>

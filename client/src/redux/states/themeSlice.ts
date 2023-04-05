@@ -3,10 +3,6 @@ import { moon, sun } from '../../assets'
 import { ThemeType } from '../../types'
 
 const initialState: ThemeType = {
-  colors: {
-    bg: '#13131a',
-    text: '#445155'
-  },
   darkmode: true,
   iconURL: moon
 }
@@ -16,16 +12,10 @@ const themeSlice = createSlice({
   initialState,
   reducers: {
     setDarkTheme(state) {
-      ;(state.colors.bg = '#13131a'),
-        (state.colors.text = '#445155'),
-        (state.darkmode = true),
-        (state.iconURL = moon)
+      ;(state.darkmode = true), (state.iconURL = moon)
     },
     setDefaultTheme(state) {
-      ;(state.colors.bg = '#ebfbff'),
-        (state.colors.text = '#fff'),
-        (state.darkmode = false),
-        (state.iconURL = sun)
+      ;(state.darkmode = false), (state.iconURL = sun)
     }
   }
 })
