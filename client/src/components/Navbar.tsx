@@ -5,12 +5,13 @@ import { menu, search } from '../assets'
 import UserIcon from './UserIcon'
 import Drawer from './Drawer'
 import { useActiveLink } from '../hooks'
+import useWeb3 from '../hooks/useWeb3'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const { activeLink, updateActiveLink } = useActiveLink()
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false)
-  const address = '0xasdasdasfsdhjkl'
+  const { address, connect } = useWeb3()
 
   const onNavigate = (link: string, name: string, disabled: boolean = true) => {
     if (!disabled) {
@@ -20,11 +21,11 @@ const Navbar = () => {
     }
   }
 
-  const onBtnAction = () => {
+  const onBtnAction = async () => {
     if (address) {
-      navigate('create-campaign')
+      navigate('create')
     } else {
-      alert('Connect ')
+      await connect()
     }
   }
   return (

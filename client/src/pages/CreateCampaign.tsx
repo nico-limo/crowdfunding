@@ -1,15 +1,17 @@
 import { ChangeEvent, useState } from 'react'
-import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 import { CustomButton } from '../components'
 import { INITIAL_FORM, checkIfImage } from '../utils'
 import Loader from '../components/Loader'
 import FormField from '../components/FormField'
 import Banner from '../components/Banner'
+import useWeb3 from '../hooks/useWeb3'
+import { parseUnits } from 'ethers/lib/utils'
 
 const CreateCampaign = () => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { publishCampaign } = useWeb3()
   const [form, setForm] = useState(INITIAL_FORM)
 
   const handleFormFieldChange = (
@@ -19,10 +21,25 @@ const CreateCampaign = () => {
     setForm({ ...form, [fieldName]: e.target.value })
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log(form)
+    checkIfImage(form.image, async (exists) => {
+      if (exists) {
+        setIsLoading(true)
+        const parsedTarget = parseUnits(form.target, 18).toString()
+        await publishCampaign({
+          ...form,
+          target: parsedTarget
+        })
+        setIsLoading(false)
+        navigate('/')
+      } else {
+        alert('Provide valid image URL')
+        setForm({ ...form, image: '' })
+      }
+    })
   }
+
   return (
     <div className='bg-black-700 flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4 '>
       {isLoading ? (

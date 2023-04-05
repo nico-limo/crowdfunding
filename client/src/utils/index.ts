@@ -36,3 +36,5 @@ export const INITIAL_FORM: CampainInterface = {
   deadline: '',
   image: ''
 }
+
+export const CROWDFUNDING_ADDRESS = '0xB6dc3303146A40F8823aD9a7915d2C5c53B87288'

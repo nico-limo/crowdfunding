@@ -1,4 +1,3 @@
-import React from 'react'
 import { thirdweb } from '../assets'
 import { UserIconType } from '../types'
 

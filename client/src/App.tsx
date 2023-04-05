@@ -2,9 +2,18 @@ import { Route, Routes } from 'react-router-dom'
 import { Navbar, Sidebar } from './components'
 import { Home, Campaign, CreateCampaign, Profile } from './pages'
 import useTheme from './hooks/useTheme'
+import { useActiveLink } from './hooks'
+import { useEffect } from 'react'
 
 export default function App() {
+  const { updateActiveLink } = useActiveLink()
   const { darkmode } = useTheme()
+
+  useEffect(() => {
+    const path = location.pathname === '/' ? 'dashboard' : location.pathname
+    updateActiveLink(path)
+  }, [])
+
   const colorBg = darkmode ? 'bg-black-800' : 'bg-cyan-100'
   const colorText = darkmode ? 'text-white' : 'text-black'
   return (
