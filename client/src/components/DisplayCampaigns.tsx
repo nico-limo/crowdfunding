@@ -6,7 +6,8 @@ import FundCard from './FundCard'
 const DisplayCampaigns = ({
   campaigns,
   isLoading,
-  title
+  title,
+  isConnected
 }: DisplayCampaignType) => {
   const navigate = useNavigate()
 
@@ -18,10 +19,10 @@ const DisplayCampaigns = ({
   return (
     <div>
       <h1 className='font-epilogue font-semibold text-[18px] text-left'>
-        {`${title} (${campaigns.length})`}
+        {title}
 
         <div className='flex flex-wrap mt-[20px] gap-[26px]'>
-          {isLoading && (
+          {isConnected && isLoading && (
             <img
               src={loader}
               alt='loader'

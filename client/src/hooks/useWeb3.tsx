@@ -11,6 +11,7 @@ import {
   CampainInterface
 } from '../types'
 import { formatEther } from 'ethers/lib/utils'
+import { Campaign } from '../pages'
 
 const useWeb3 = () => {
   const { contract } = useContract(CROWDFUNDING_ADDRESS)
@@ -63,7 +64,27 @@ const useWeb3 = () => {
     }
   }
 
-  return { connect, publishCampaign, address, contract, getCampaigns }
+  const getUserCampaigns = async () => {
+    if (address) {
+      const allCampaigns = await getCampaigns()
+
+      const filteredCampaigns = allCampaigns.filter(
+        (campaign) => campaign.owner.toLowerCase() === address.toLowerCase()
+      )
+
+      return filteredCampaigns
+    }
+    return []
+  }
+
+  return {
+    connect,
+    publishCampaign,
+    address,
+    contract,
+    getCampaigns,
+    getUserCampaigns
+  }
 }
 
 export default useWeb3

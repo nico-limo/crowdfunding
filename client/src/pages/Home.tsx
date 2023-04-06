@@ -7,7 +7,6 @@ const Home = () => {
   const { address, contract, getCampaigns } = useWeb3()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [campaigns, setCampaigns] = useState<CampaignParsedInterface[]>([])
-  getCampaigns()
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -22,9 +21,12 @@ const Home = () => {
 
   return (
     <DisplayCampaigns
-      title='All Campaigns'
+      title={
+        address ? `All Campaigns (${campaigns.length})` : 'Connect your Wallet'
+      }
       isLoading={isLoading}
       campaigns={campaigns}
+      isConnected={address ? true : false}
     />
   )
 }

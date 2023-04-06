@@ -26,11 +26,17 @@ export type DisplayCampaignType = {
   title: string
   campaigns: CampaignParsedInterface[]
   isLoading: boolean
+  isConnected: boolean
 }
 
 export type FundCardType = {
   campaign: CampaignParsedInterface
   handleClick: any
+}
+
+export type CountBoxType = {
+  title: string
+  value: string
 }
 
 export type FormFieldType = {

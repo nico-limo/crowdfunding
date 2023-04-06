@@ -13,10 +13,10 @@ export const daysLeft = (deadline: string | number): string => {
 }
 
 export const calculateBarPercentage = (
-  goal: number,
-  raisedAmount: number
+  goal: string,
+  raisedAmount: string
 ): number => {
-  const percentage = Math.round((raisedAmount * 100) / goal)
+  const percentage = Math.round((Number(raisedAmount) * 100) / Number(goal))
   return percentage
 }
 
