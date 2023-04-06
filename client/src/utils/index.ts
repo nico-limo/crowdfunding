@@ -1,10 +1,15 @@
 import { CampainInterface } from '../types'
 
-export const daysLeft = (deadline: string): string => {
-  const difference = new Date(deadline).getTime() - Date.now()
-  const remainingDays = difference / (1000 * 3600 * 24)
+export const daysLeft = (deadline: string | number): string => {
+  const now = new Date().getTime()
+  const deadlineTime = new Date(deadline).getTime()
+  const difference = deadlineTime - now
 
-  return remainingDays.toFixed(0)
+  if (difference <= 0) {
+    return '0'
+  }
+  const remainingDays = Math.ceil(difference / (1000 * 60 * 60 * 24))
+  return remainingDays.toString()
 }
 
 export const calculateBarPercentage = (
@@ -12,7 +17,6 @@ export const calculateBarPercentage = (
   raisedAmount: number
 ): number => {
   const percentage = Math.round((raisedAmount * 100) / goal)
-
   return percentage
 }
 

@@ -16,7 +16,7 @@ const Icon = ({
   const isAnimated = animated && 'animate-fade'
   return (
     <div
-      className={`${imgSize} rounded-[10px] ${activeBG} flex justify-center items-center ${isDisabled} transition duration-300 ease-in-out ${isHover} ${isAnimated}`}
+      className={`${imgSize} rounded-[10px] ${activeBG} flex justify-center items-center ${isDisabled} transition duration-300  ${isHover} ${isAnimated}`}
       onClick={onClick}
     >
       <img

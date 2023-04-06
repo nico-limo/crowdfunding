@@ -4,9 +4,13 @@ import {
   useContractWrite,
   useMetamask
 } from '@thirdweb-dev/react'
-import React from 'react'
 import { CROWDFUNDING_ADDRESS } from '../utils'
-import { CampainInterface } from '../types'
+import {
+  CampaignCallData,
+  CampaignParsedInterface,
+  CampainInterface
+} from '../types'
+import { formatEther } from 'ethers/lib/utils'
 
 const useWeb3 = () => {
   const { contract } = useContract(CROWDFUNDING_ADDRESS)
@@ -19,7 +23,7 @@ const useWeb3 = () => {
 
   const publishCampaign = async (form: CampainInterface) => {
     try {
-      const { title, deadline, description, image, name, target } = form
+      const { title, deadline, description, image, target } = form
       const data = await createCampaign([
         address,
         title,
@@ -33,7 +37,33 @@ const useWeb3 = () => {
       console.log('Contract call Failure ', error)
     }
   }
-  return { connect, publishCampaign, address }
+
+  const getCampaigns = async (): Promise<CampaignParsedInterface[]> => {
+    try {
+      const campaigns = await contract?.call('getCampaigns')
+      if (campaigns && campaigns.length) {
+        const parsedCampaigns: CampaignParsedInterface[] = campaigns.map(
+          (campaing: CampaignCallData, i: number) => ({
+            owner: campaing.owner,
+            title: campaing.title,
+            description: campaing.description,
+            target: formatEther(campaing.target.toString()),
+            deadline: campaing.deadline.toNumber(),
+            amountCollected: formatEther(campaing.amountCollected.toString()),
+            image: campaing.image,
+            pId: i
+          })
+        )
+        return parsedCampaigns
+      }
+      return []
+    } catch (error) {
+      console.log('Contract call Failure ', error)
+      return []
+    }
+  }
+
+  return { connect, publishCampaign, address, contract, getCampaigns }
 }
 
 export default useWeb3

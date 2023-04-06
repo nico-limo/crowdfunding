@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { logo, sun, moon } from '../assets'
+import { logo } from '../assets'
 import { navlinks } from '../constants'
 import Icon from './Icon'
 import { useActiveLink } from '../hooks'

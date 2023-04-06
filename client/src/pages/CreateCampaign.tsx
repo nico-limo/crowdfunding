@@ -1,10 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CustomButton } from '../components'
+import { Banner, CustomButton, FormField, Loader } from '../components'
 import { INITIAL_FORM, checkIfImage } from '../utils'
-import Loader from '../components/Loader'
-import FormField from '../components/FormField'
-import Banner from '../components/Banner'
 import useWeb3 from '../hooks/useWeb3'
 import { parseUnits } from 'ethers/lib/utils'
 

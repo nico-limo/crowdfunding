@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import CustomButton from './CustomButton'
+import { UserIcon, Drawer, CustomButton } from '../components'
 import { menu, search } from '../assets'
-import UserIcon from './UserIcon'
-import Drawer from './Drawer'
 import { useActiveLink } from '../hooks'
 import useWeb3 from '../hooks/useWeb3'
 

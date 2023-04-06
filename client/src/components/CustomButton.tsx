@@ -1,4 +1,3 @@
-import React from 'react'
 import { CustomButtonType } from '../types'
 
 const CustomButton = ({ onClick, title, bg, btnType }: CustomButtonType) => {
