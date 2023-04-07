@@ -24,6 +24,10 @@ const Campaign = () => {
   const [amount, setAmount] = useState<string>('')
   const [donators, setDonators] = useState([])
 
+  const handleDonate = async () => {
+    console.log('Do something')
+  }
+
   const remainingDays = daysLeft(deadline)
   return (
     <div>
@@ -42,9 +46,7 @@ const Campaign = () => {
                 width: `${calculateBarPercentage(target, amountCollected)}%`,
                 maxWidth: '100%'
               }}
-            >
-              asd
-            </div>
+            ></div>
           </div>
         </div>
 
@@ -52,6 +54,106 @@ const Campaign = () => {
           <CountBox title='Days Left' value={remainingDays} />
           <CountBox title={`Raised of ${target}`} value={amountCollected} />
           <CountBox title='Total Backers' value={donators.length.toString()} />
+        </div>
+      </div>
+
+      {/* CREATOR SECTION */}
+      <div className='mt-[60px] flex lg:flex-row flex-col gap-5'>
+        <div className='flex-[2] flex flex-col gap-[40px]'>
+          <div>
+            <h4 className='font-epilogue font-semibold text-[18px] uppercase'>
+              Creator
+            </h4>
+            <div className='mt-[20px] flex flex-row items-center flex-wrap gap-[14px]'>
+              <div className='w-[52px] h-[52px] flex items-center justify-center rounded-full bg-black-600 cursor-pointer'>
+                <img
+                  src={thirdweb}
+                  alt='user'
+                  className='w-[60%] h-[60%] object-contain'
+                />
+              </div>
+              <div>
+                <h4 className='font-epilogue font-semibold text-[14px] break-all'>
+                  {owner}
+                </h4>
+                <p className='mt-[4px] font-epilogue font-normal text-[12px] text-gray-500'>
+                  10 Campaigns
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* STORY SECTION */}
+
+          <div>
+            <h4 className='font-epilogue font-semibold text-[18px] uppercase'>
+              Story
+            </h4>
+            <div className='mt-[20px]'>
+              <p className='font-epilogue font-normal text-[16px] leading-[26px] text-justify text-gray-500'>
+                {description}
+              </p>
+            </div>
+          </div>
+
+          {/* DONATORS SECTION */}
+          <div>
+            <h4 className='font-epilogue font-semibold text-[18px] uppercase'>
+              Donators
+            </h4>
+            <div className='mt-[20px] flex flex-col gap-4'>
+              <p className='font-epilogue font-normal text-[16px] leading-[26px] text-justify text-gray-500'>
+                {donators.length > 0 ? (
+                  donators.map((item, i) => (
+                    <div key={`${item}-${i}`}>DONATOR</div>
+                  ))
+                ) : (
+                  <p className='font-epilogue font-normal text-[16px] leading-[26px] text-justify text-gray-500'>
+                    No donators yet. Be the first one!
+                  </p>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* FUND SECTION*/}
+        <div className='flex-1'>
+          <h4 className='font-epilogue font-semibold text-[18px] uppercase'>
+            Funds
+          </h4>
+          <div className='mt-[20px] flex flex-col p-4 bg-black-700 rounded-[10px]'>
+            <p className='font-epilogue font-medium text-[20px] leading-[30px] text-center text-gray-500'>
+              Fund the campaign
+            </p>
+            <div className='mt-[30px]'>
+              <input
+                type='number'
+                placeholder='ETH 0.1'
+                step='0.01'
+                className='w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-black-500 bg-transparent font-epilogue text-[18px] leading-[30px] placeholder:text-gray-600 rounded-[10px]'
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+
+              <div className='my-[20px] p-4 bg-black-800 rounded-[10px]'>
+                <h4 className='font-epilogue font-semibold text-[14px] leading-[22px] '>
+                  Back it because you believe in it.
+                </h4>
+                <p className='mt-[20px] font-epilogue font-normal leading-[22px] text-gray-500'>
+                  Support the project for no rewardm just because it speaks to
+                  you.
+                </p>
+              </div>
+              <CustomButton
+                btnType='button'
+                title='Fund Campaign'
+                bg='bg-purple-600'
+                fullWidth
+                onClick={handleDonate}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

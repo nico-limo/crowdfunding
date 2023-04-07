@@ -1,19 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import useWeb3 from '../hooks/useWeb3'
-import { CampaignParsedInterface } from '../types'
 import { DisplayCampaigns } from '../components'
+import useCampaign from '../hooks/useCampaign'
 
 const Profile = () => {
   const { address, contract, getUserCampaigns } = useWeb3()
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [campaigns, setCampaigns] = useState<CampaignParsedInterface[]>([])
+  const { userCampaigns, updateUserCampaigns, isLoadingUser } = useCampaign()
 
   useEffect(() => {
     const fetchCampaigns = async () => {
-      if (address && contract) {
+      if (address && contract && !userCampaigns.length) {
         const data = await getUserCampaigns()
-        setCampaigns(data)
-        setIsLoading(false)
+        updateUserCampaigns(data)
       }
     }
     fetchCampaigns()
@@ -23,11 +21,11 @@ const Profile = () => {
     <DisplayCampaigns
       title={
         address
-          ? `Yours Campaigns (${campaigns.length})`
+          ? `Yours Campaigns (${userCampaigns.length})`
           : 'Connect your Wallet'
       }
-      isLoading={isLoading}
-      campaigns={campaigns}
+      isLoading={isLoadingUser}
+      campaigns={userCampaigns}
       isConnected={address ? true : false}
     />
   )

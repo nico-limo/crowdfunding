@@ -11,6 +11,8 @@ export type CustomButtonType = {
   title: string
   bg?: string
   btnType?: button | reset | submit
+  fullWidth?: boolean
+  isLoading?: boolean
 }
 export type UserIconType = {
   size?: 'sm' | 'md'
@@ -26,7 +28,7 @@ export type DisplayCampaignType = {
   title: string
   campaigns: CampaignParsedInterface[]
   isLoading: boolean
-  isConnected: boolean
+  isConnected?: boolean
 }
 
 export type FundCardType = {

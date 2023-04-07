@@ -4,11 +4,14 @@ import { Banner, CustomButton, FormField, Loader } from '../components'
 import { INITIAL_FORM, checkIfImage } from '../utils'
 import useWeb3 from '../hooks/useWeb3'
 import { parseUnits } from 'ethers/lib/utils'
+import useCampaign from '../hooks/useCampaign'
 
 const CreateCampaign = () => {
   const navigate = useNavigate()
+  const { updateCampaigns, updateUserCampaigns } = useCampaign()
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { publishCampaign } = useWeb3()
+  const { publishCampaign, getCampaigns, getUserCampaigns } = useWeb3()
   const [form, setForm] = useState(INITIAL_FORM)
 
   const handleFormFieldChange = (
@@ -28,6 +31,10 @@ const CreateCampaign = () => {
           ...form,
           target: parsedTarget
         })
+        const newCampaigns = await getCampaigns()
+        const newUserCampaigns = await getUserCampaigns()
+        updateCampaigns(newCampaigns)
+        updateUserCampaigns(newUserCampaigns)
         setIsLoading(false)
         navigate('/')
       } else {

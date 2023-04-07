@@ -1,17 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit'
 import themeSlice from './states/themeSlice'
 import actualLinkSlice from './states/actualLinkSlice'
-import { ThemeType } from '../types'
+import campaignsSlice, { CampaignsState } from './states/campaignsSlice'
+import { CampaignParsedInterface, ThemeType } from '../types'
 
 export interface AppStore {
   actualLink: string
   theme: ThemeType
+  campaigns: CampaignsState
 }
 
 export const store = configureStore<AppStore>({
   reducer: {
     actualLink: actualLinkSlice,
-    theme: themeSlice
+    theme: themeSlice,
+    campaigns: campaignsSlice
   }
 })
 

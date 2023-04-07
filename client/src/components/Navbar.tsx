@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserIcon, Drawer, CustomButton } from '../components'
 import { menu, search } from '../assets'
 import { useActiveLink } from '../hooks'
 import useWeb3 from '../hooks/useWeb3'
+import useCampaign from '../hooks/useCampaign'
 
 const Navbar = () => {
   const navigate = useNavigate()
+  const { campaigns, searchInput, updateSearch, updateFilteredCampaigns } =
+    useCampaign()
   const { activeLink, updateActiveLink } = useActiveLink()
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false)
   const { address, connect } = useWeb3()
@@ -26,6 +29,18 @@ const Navbar = () => {
       await connect()
     }
   }
+
+  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const filteredCampaigns = campaigns.filter(
+      (campaign) =>
+        campaign.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        campaign.description
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+    )
+    updateSearch(e.target.value)
+    updateFilteredCampaigns(filteredCampaigns)
+  }
   return (
     <div className='flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6'>
       <div className='lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-black-700 rounded-[100px]'>
@@ -33,6 +48,8 @@ const Navbar = () => {
           type='text'
           placeholder='Search for campaigns'
           className='flex w-full font-epilogue font-normal text-[14px] placeholder:text-gray-600 bg-transparent outline-none'
+          onChange={(e) => onSearch(e)}
+          value={searchInput}
         />
         <div className='w-[72px] h-full  rounded-[20px] bg-green-600 flex justify-center items-center cursor-pointer'>
           <img

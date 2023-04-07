@@ -7,7 +7,7 @@ const DisplayCampaigns = ({
   campaigns,
   isLoading,
   title,
-  isConnected
+  isConnected = true
 }: DisplayCampaignType) => {
   const navigate = useNavigate()
 
