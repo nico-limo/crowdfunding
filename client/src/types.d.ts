@@ -1,5 +1,7 @@
 import { BigNumber } from 'ethers'
 
+// Componentns Tpes
+
 export type NavLinksType = {
   name: string
   imgUrl: string
@@ -51,6 +53,8 @@ export type FormFieldType = {
   ) => void
   isTextArea?: boolean
 }
+
+// Elements and variables interfaces
 export interface IconInterface {
   size?: string
   imgUrl: string

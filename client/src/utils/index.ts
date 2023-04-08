@@ -1,5 +1,11 @@
-import { CampainInterface } from '../types'
+import { CampaignParsedInterface, CampainInterface } from '../types'
 
+/**
+ * Calculates the number of days left until a deadline.
+ *
+ * @param deadline The deadline, either a date string or a number (in milliseconds).
+ * @returns The number of days left until the deadline, as a string.
+ */
 export const daysLeft = (deadline: string | number): string => {
   const now = new Date().getTime()
   const deadlineTime = new Date(deadline).getTime()
@@ -12,6 +18,13 @@ export const daysLeft = (deadline: string | number): string => {
   return remainingDays.toString()
 }
 
+/**
+ * Calculates the percentage of the goal that has been raised.
+ *
+ * @param goal The fundraising goal amount, as a string.
+ * @param raisedAmount The amount of ethers raised so far, as a string.
+ * @returns The percentage of the goal that has been raised, as a number.
+ */
 export const calculateBarPercentage = (
   goal: string,
   raisedAmount: string
@@ -20,6 +33,12 @@ export const calculateBarPercentage = (
   return percentage
 }
 
+/**
+ * Checks if an image exists at a given URL.
+ *
+ * @param url The URL of the image to check.
+ * @param callback A callback function that takes a boolean indicating whether the image exists or not.
+ */
 export const checkIfImage = (
   url: string,
   callback: (value: boolean) => void
@@ -30,6 +49,17 @@ export const checkIfImage = (
   if (img.complete) callback(true)
   img.onload = () => callback(true)
   img.onerror = () => callback(false)
+}
+
+export const filterCampaigns = (
+  campaigns: CampaignParsedInterface[],
+  searchTerm: string
+) => {
+  return campaigns.filter(
+    (campaign) =>
+      campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 }
 
 export const INITIAL_FORM: CampainInterface = {

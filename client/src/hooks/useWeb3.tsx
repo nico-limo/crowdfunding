@@ -11,7 +11,11 @@ import {
   CampainInterface
 } from '../types'
 import { formatEther } from 'ethers/lib/utils'
-import { Campaign } from '../pages'
+
+/**
+ * A custom hook that provides various Web3 functionality for interacting with the Ethereum network.
+ * @returns An object containing various Web3 functionality.
+ */
 
 const useWeb3 = () => {
   const { contract } = useContract(CROWDFUNDING_ADDRESS)
@@ -22,6 +26,10 @@ const useWeb3 = () => {
   const address = useAddress()
   const connect = useMetamask()
 
+  /**
+   * Publishes a new campaign to the network.
+   * @param form An object containing the details of the new campaign to be published.
+   */
   const publishCampaign = async (form: CampainInterface) => {
     try {
       const { title, deadline, description, image, target } = form
@@ -39,6 +47,10 @@ const useWeb3 = () => {
     }
   }
 
+  /**
+   * Retrieves a list of all campaigns on the network.
+   * @returns A promise that resolves to an array of parsed campaign data.
+   */
   const getCampaigns = async (): Promise<CampaignParsedInterface[]> => {
     try {
       const campaigns = await contract?.call('getCampaigns')
@@ -64,6 +76,10 @@ const useWeb3 = () => {
     }
   }
 
+  /**
+   * Retrieves a list of all campaigns owned by the current user.
+   * @returns A promise that resolves to an array of parsed campaign data.
+   */
   const getUserCampaigns = async () => {
     if (address) {
       const allCampaigns = await getCampaigns()

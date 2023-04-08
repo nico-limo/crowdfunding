@@ -5,7 +5,13 @@ import useCampaign from '../hooks/useCampaign'
 
 const Profile = () => {
   const { address, contract, getUserCampaigns } = useWeb3()
-  const { userCampaigns, updateUserCampaigns, isLoadingUser } = useCampaign()
+  const {
+    userCampaigns,
+    updateUserCampaigns,
+    isLoadingUser,
+    searchInput,
+    filteredUserCampaigns
+  } = useCampaign()
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -25,7 +31,7 @@ const Profile = () => {
           : 'Connect your Wallet'
       }
       isLoading={isLoadingUser}
-      campaigns={userCampaigns}
+      campaigns={searchInput ? filteredUserCampaigns : userCampaigns}
       isConnected={address ? true : false}
     />
   )
