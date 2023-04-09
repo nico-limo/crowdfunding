@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-
-export type LinkType = 'dashboard' | 'profile' | 'create'
+import { LinkType } from '../../types'
 
 const initialState: LinkType = 'dashboard'
 

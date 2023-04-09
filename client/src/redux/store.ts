@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import themeSlice from './states/themeSlice'
 import actualLinkSlice from './states/actualLinkSlice'
 import campaignsSlice, { CampaignsState } from './states/campaignsSlice'
-import { CampaignParsedInterface, LinkType, ThemeType } from '../types'
+import { LinkType, ThemeType } from '../types'
 
 export interface AppStore {
   actualLink: LinkType
