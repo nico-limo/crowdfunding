@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { LinkType } from '../../types'
 
-const initialState: string = 'dashboard'
+const initialState: LinkType = 'dashboard'
 
 export const actualLinkSlice = createSlice({
   name: 'actualLink',

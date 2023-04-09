@@ -4,14 +4,17 @@ import { Home, Campaign, CreateCampaign, Profile } from './pages'
 import useTheme from './hooks/useTheme'
 import { useActiveLink } from './hooks'
 import { useEffect } from 'react'
+import { navlinks } from './constants'
 
 export default function App() {
   const { updateActiveLink } = useActiveLink()
   const { darkmode } = useTheme()
 
   useEffect(() => {
-    const path = location.pathname === '/' ? 'dashboard' : location.pathname
-    updateActiveLink(path)
+    const path = navlinks.find((link) => link.link === location.pathname)
+    if (path) {
+      updateActiveLink(path.name)
+    }
   }, [])
 
   const colorBg = darkmode ? 'bg-black-800' : 'bg-cyan-100'

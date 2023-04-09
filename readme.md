@@ -6,7 +6,25 @@ With this app, users can create campaigns to fund their projects, causes, or ide
 
 The app also offers a transparent and secure way for contributors to track their donations and monitor the progress of the campaign. All transactions are recorded on the blockchain, providing an immutable record of the campaign's funding history.
 
-<!-- ADD IMAGES HERE -->
+## Features
+
+- See all available campaigns
+- Fund a campaign
+- Create a campaign
+
+## Screenshots
+
+This page displays all available campaigns that users can contribute to. Users can filter campaigns by category or search for a specific campaign.
+
+<img src='/client/src/assets/screen1.png' alt='Home'>
+
+This page provides detailed information about a selected campaign, including the campaign description, funding goal, and list of donators. Users can choose to contribute to the campaign by selecting an amount of ethers.
+
+<img src='/client/src/assets/screen2.png' alt='Campaign'>
+
+This page allows users to create their own crowdfunding campaign. Users can specify the campaign title, funding goal, description, deadline and an image.
+
+<img src='/client/src/assets/screen3.png' alt='Create'>
 
 ## Requirements
 

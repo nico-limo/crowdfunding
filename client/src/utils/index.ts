@@ -1,3 +1,4 @@
+import { formatEther, parseEther } from 'ethers/lib/utils'
 import { CampaignParsedInterface, CampainInterface } from '../types'
 
 /**
@@ -51,6 +52,12 @@ export const checkIfImage = (
   img.onerror = () => callback(false)
 }
 
+/**
+ * Filter campaigns based on a search term
+ * @param campaigns An array of campaign objects
+ * @param searchTerm The search term to filter by
+ * @returns An array of campaign objects that match the search term
+ */
 export const filterCampaigns = (
   campaigns: CampaignParsedInterface[],
   searchTerm: string
@@ -62,6 +69,24 @@ export const filterCampaigns = (
   )
 }
 
+/**
+ * Calculate the amount collected from a campaign
+ * @param totalAmount The actual total amount of the campaign
+ * @param amount The amount sended by the donator
+ * @returns The new total amount
+ */
+export const getAmountCollected = (
+  totalAmount: string,
+  amount: string
+): string => {
+  const totalAmountBN = parseEther(totalAmount)
+  const amountBN = parseEther(amount)
+  const amountCollectedBN = totalAmountBN.add(amountBN)
+
+  const amountCollected = formatEther(amountCollectedBN)
+  return amountCollected
+}
+
 export const INITIAL_FORM: CampainInterface = {
   name: '',
   title: '',
@@ -71,4 +96,4 @@ export const INITIAL_FORM: CampainInterface = {
   image: ''
 }
 
-export const CROWDFUNDING_ADDRESS = '0xEb74a94E5431Ac5E1521744AA6e545Be27f42f17'
+export const CROWDFUNDING_ADDRESS = '0xd66b177853d9D9bB4942D4537Aeb6f7fB28aB13F'

@@ -86,3 +86,15 @@ export interface CampaignParsedInterface extends CampaignCallData {
   deadline: number
   target: string
 }
+
+export interface DonatorInterface {
+  donator: any
+  donation: string
+}
+
+export interface DonatorsData {
+  0: string[]
+  1: BigNumber[]
+}
+
+export type LinkType = 'dashboard' | 'profile' | 'create'

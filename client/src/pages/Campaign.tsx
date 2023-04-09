@@ -1,37 +1,58 @@
-import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { CountBox, CustomButton, Loader } from '../components'
-import { calculateBarPercentage, daysLeft } from '../utils'
+import { CountBox, CustomButton } from '../components'
+import { calculateBarPercentage, daysLeft, getAmountCollected } from '../utils'
 import { thirdweb } from '../assets'
-import { CampaignParsedInterface } from '../types'
+import { CampaignParsedInterface, DonatorInterface } from '../types'
 import useWeb3 from '../hooks/useWeb3'
+import useCampaign from '../hooks/useCampaign'
 
 const Campaign = () => {
   const { state }: { state: CampaignParsedInterface } = useLocation()
-  const {
-    amountCollected,
-    deadline,
-    description,
-    image,
-    owner,
-    pId,
-    target,
-    title
-  } = state
-  const { address, contract } = useWeb3()
+  const [campaignState, setCampaignState] = useState(state)
+  const { amountCollected, deadline, description, image, owner, pId, target } =
+    campaignState
+  const { address, contract, donate, getDonations } = useWeb3()
+  const { campaigns } = useCampaign()
+  const totalCampaigns = campaigns.filter(
+    (campaign) => campaign.owner === owner
+  ).length
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [amount, setAmount] = useState<string>('')
-  const [donators, setDonators] = useState([])
+  const [donators, setDonators] = useState<DonatorInterface[]>([])
 
   const handleDonate = async () => {
-    console.log('Do something')
+    try {
+      if (address && contract) {
+        setIsLoading(true)
+        await donate(pId, amount)
+        const newTotalAmount = getAmountCollected(amountCollected, amount)
+        setCampaignState((prevState) => ({
+          ...prevState,
+          amountCollected: newTotalAmount
+        }))
+        setAmount('')
+        setIsLoading(false)
+      }
+    } catch (error) {
+      setIsLoading(false)
+    }
   }
 
   const remainingDays = daysLeft(deadline)
+
+  useEffect(() => {
+    const fetchDonators = async () => {
+      const data = await getDonations(pId)
+      if (data.length) {
+        setDonators(data)
+      }
+    }
+    if (contract) fetchDonators()
+  }, [contract, campaignState])
+
   return (
     <div>
-      {isLoading && <Loader />}
       <div className='w-full flex md:flex-row flex-col mt-10 gap-[30px]'>
         <div className='flex-1 flex-col'>
           <img
@@ -77,7 +98,7 @@ const Campaign = () => {
                   {owner}
                 </h4>
                 <p className='mt-[4px] font-epilogue font-normal text-[12px] text-gray-500'>
-                  10 Campaigns
+                  {`${totalCampaigns} Campaigns`}
                 </p>
               </div>
             </div>
@@ -101,18 +122,26 @@ const Campaign = () => {
             <h4 className='font-epilogue font-semibold text-[18px] uppercase'>
               Donators
             </h4>
-            <div className='mt-[20px] flex flex-col gap-4'>
-              <p className='font-epilogue font-normal text-[16px] leading-[26px] text-justify text-gray-500'>
-                {donators.length > 0 ? (
-                  donators.map((item, i) => (
-                    <div key={`${item}-${i}`}>DONATOR</div>
-                  ))
-                ) : (
-                  <p className='font-epilogue font-normal text-[16px] leading-[26px] text-justify text-gray-500'>
-                    No donators yet. Be the first one!
-                  </p>
-                )}
-              </p>
+            <div className='mt-[20px] flex flex-col gap-4 max-h-[300px] overflow-y-auto'>
+              {donators.length > 0 ? (
+                donators.map((item, i) => (
+                  <div
+                    key={`${item.donator}-${i}`}
+                    className='flex justify-between items-center gap-4'
+                  >
+                    <p className='font-epilogue font-normal text-[16px] text-gray-400 leading-[26px] break-all truncate'>{`${
+                      i + 1
+                    }. ${item.donator}`}</p>
+                    <p className='font-epilogue font-normal text-[16px] text-gray-500 leading-[26px] break-all'>
+                      {item.donation}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className='font-epilogue font-normal text-[16px] leading-[26px] text-justify text-gray-500'>
+                  No donators yet. Be the first one!
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -150,6 +179,7 @@ const Campaign = () => {
                 title='Fund Campaign'
                 bg='bg-purple-600'
                 fullWidth
+                isLoading={isLoading}
                 onClick={handleDonate}
               />
             </div>

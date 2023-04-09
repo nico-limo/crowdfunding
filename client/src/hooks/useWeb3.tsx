@@ -8,9 +8,11 @@ import { CROWDFUNDING_ADDRESS } from '../utils'
 import {
   CampaignCallData,
   CampaignParsedInterface,
-  CampainInterface
+  CampainInterface,
+  DonatorInterface,
+  DonatorsData
 } from '../types'
-import { formatEther } from 'ethers/lib/utils'
+import { formatEther, parseEther } from 'ethers/lib/utils'
 
 /**
  * A custom hook that provides various Web3 functionality for interacting with the Ethereum network.
@@ -41,9 +43,9 @@ const useWeb3 = () => {
         new Date(deadline).getTime(),
         image
       ])
-      console.log('Contract call Success ', data)
     } catch (error) {
-      console.log('Contract call Failure ', error)
+      console.error(error)
+      throw 'Error on calling the function'
     }
   }
 
@@ -71,7 +73,6 @@ const useWeb3 = () => {
       }
       return []
     } catch (error) {
-      console.log('Contract call Failure ', error)
       return []
     }
   }
@@ -93,13 +94,56 @@ const useWeb3 = () => {
     return []
   }
 
+  /**
+  Makes a donation to a campaign using the smart contract.
+  @param pId - The id of the campaign to donate to.
+  @param amount - The amount to donate in Ether.
+  @returns - A Promise that resolves to the transaction data returned by the contract, or undefined if the contract is not initialized.
+  */
+  const donate = async (pId: number, amount: string) => {
+    try {
+      const data = await contract?.call('donateToCampaign', pId, {
+        value: parseEther(amount)
+      })
+      return data
+    } catch (error) {
+      console.error(error)
+      throw 'Error on donate'
+    }
+  }
+
+  /**
+   * Gets an array of donations for a specific campaign
+   * @param pId The ID of the campaign to get the donations for
+   * @returns An array of `DonatorInterface` objects containing information about each donation
+   */
+  const getDonations = async (pId: number) => {
+    const donations: DonatorsData = await contract?.call('getDonators', pId)
+
+    const numberOfDonations: number = donations[0].length
+
+    const parsedDonations: DonatorInterface[] = []
+
+    // Loop through each donation in the array and parse the data into `DonatorInterface` objects
+    for (let i = 0; i < numberOfDonations; i++) {
+      parsedDonations.push({
+        donator: donations[0][i],
+        donation: formatEther(donations[1][i].toString())
+      })
+    }
+
+    return parsedDonations
+  }
+
   return {
     connect,
     publishCampaign,
     address,
     contract,
     getCampaigns,
-    getUserCampaigns
+    getUserCampaigns,
+    donate,
+    getDonations
   }
 }
 
