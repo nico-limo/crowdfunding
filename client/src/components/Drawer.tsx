@@ -1,21 +1,22 @@
 import { navlinks } from '../constants'
+import { LinkType } from '../types'
 import CustomButton from './CustomButton'
 
 type Props = {
   toggleDrawer: boolean
   activeLink: string
-  onNavigate: (link: string, name: string, disabled?: boolean) => void
+  onNavigate: (link: string, name: LinkType, disabled?: boolean) => void
   onBtnAction: () => void
+  address: string | undefined
 }
 
 const Drawer = ({
   toggleDrawer,
   activeLink,
   onNavigate,
-  onBtnAction
+  onBtnAction,
+  address
 }: Props) => {
-  const address = '0xasdasdasfsdhjkl'
-
   return (
     <div
       className={`absolute top-[60px] right-0 left-0 bg-black-700 z-10 rounded-[10px] shadow-secondary py-4 ${

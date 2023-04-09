@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 // Componentns Tpes
 
 export type NavLinksType = {
-  name: string
+  name: LinkType
   imgUrl: string
   link: string
   disabled: boolean
@@ -97,4 +97,10 @@ export interface DonatorsData {
   1: BigNumber[]
 }
 
-export type LinkType = 'dashboard' | 'profile' | 'create'
+export type LinkType =
+  | 'dashboard'
+  | 'profile'
+  | 'create'
+  | 'payment'
+  | 'withdraw'
+  | 'logout'

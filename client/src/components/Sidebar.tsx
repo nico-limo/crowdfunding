@@ -4,13 +4,18 @@ import { navlinks } from '../constants'
 import Icon from './Icon'
 import { useActiveLink } from '../hooks'
 import useTheme from '../hooks/useTheme'
+import { LinkType } from '../types'
 
 const Sidebar = () => {
   const navigate = useNavigate()
   const { activeLink, updateActiveLink } = useActiveLink()
   const { toggleTheme, iconURL } = useTheme()
 
-  const onNavigate = (link: string, name: string, disabled: boolean = true) => {
+  const onNavigate = (
+    link: string,
+    name: LinkType,
+    disabled: boolean = true
+  ) => {
     if (!disabled) {
       updateActiveLink(name)
       navigate(link)

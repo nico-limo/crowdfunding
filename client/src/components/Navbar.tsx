@@ -6,6 +6,7 @@ import { useActiveLink } from '../hooks'
 import useWeb3 from '../hooks/useWeb3'
 import useCampaign from '../hooks/useCampaign'
 import { filterCampaigns } from '../utils'
+import { LinkType } from '../types'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -21,7 +22,11 @@ const Navbar = () => {
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false)
   const { address, connect } = useWeb3()
 
-  const onNavigate = (link: string, name: string, disabled: boolean = true) => {
+  const onNavigate = (
+    link: string,
+    name: LinkType,
+    disabled: boolean = true
+  ) => {
     if (!disabled) {
       updateActiveLink(name)
       setToggleDrawer(false)
@@ -87,6 +92,7 @@ const Navbar = () => {
           onNavigate={onNavigate}
           toggleDrawer={toggleDrawer}
           onBtnAction={onBtnAction}
+          address={address}
         />
       </div>
     </div>
