@@ -1,13 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { LinkType } from '../../types'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+
+export type LinkType = 'dashboard' | 'profile' | 'create'
 
 const initialState: LinkType = 'dashboard'
 
 export const actualLinkSlice = createSlice({
   name: 'actualLink',
-  initialState: initialState,
+  initialState: 'dashboard' as LinkType,
   reducers: {
-    updateLink: (state, action) => action.payload
+    updateLink: (state, action: PayloadAction<LinkType>) => action.payload
   }
 })
 
